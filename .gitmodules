@@ -1,0 +1,3 @@
+[submodule "1-WebcamRendering/SOGLR"]
+	path = 1-WebcamRendering/SOGLR
+	url = https://github.com/TimJKent/SOGLR
