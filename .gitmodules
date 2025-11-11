@@ -1,3 +1,6 @@
 [submodule "1-WebcamRendering/SOGLR"]
 	path = 1-WebcamRendering/SOGLR
 	url = https://github.com/TimJKent/SOGLR
+[submodule "1-WebcamRendering/CPCam"]
+	path = 1-WebcamRendering/CPCam
+	url = https://github.com/TimJKent/CPCam.git
