@@ -11,6 +11,6 @@ cmake -S . -B build
 cmake --build build
 ```
 
-## Run 
+## Run
 
 ``` .\build\Debug\WebcamRendering.exe ```

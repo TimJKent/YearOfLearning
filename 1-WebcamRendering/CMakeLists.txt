@@ -6,19 +6,33 @@ add_subdirectory(CPCam)
 
 include_directories(SOGLR/include)
 include_directories(CPCam/include)
-    if(NOT WIN32)
-        message(FATAL_ERROR "WebcamRendering can only be built on Windows.")
-    endif()
+
+
 add_executable(WebcamRendering src/main.cpp)
 target_compile_features(WebcamRendering PRIVATE cxx_std_17)
+
+set(SYSTEM_LIBRARIES "")
+
+if(WIN32)
+    set(SYSTEM_LIBRARIES
+        mf
+        mfplat
+        mfreadwrite
+        mfuuid
+        ole32
+        oleaut32
+        strmiids
+    )
+elseif(UNIX)
+    set(SYSTEM_LIBRARIES
+        GL
+        pthread
+    )
+endif()
+
+
 target_link_libraries(WebcamRendering PRIVATE 
     SOGLR
     CPCam
-    mf
-    mfplat
-    mfreadwrite
-    mfuuid
-    ole32
-    oleaut32
-    strmiids
+    ${SYSTEM_LIBRARIES}
 )

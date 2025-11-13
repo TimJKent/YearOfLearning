@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <SOGLR/SOGLR.hpp>
-#include <SOGLR/etc/ImageConversions.hpp>
 #include <CPCam/CPCam.hpp>
+#include <CPCam/FormatConversions.hpp>
 #include <iostream>
 #include <algorithm>
 
@@ -22,21 +22,21 @@ int main()
 
     std::shared_ptr<SOGLR::Framebuffer> framebuffer = std::make_shared<SOGLR::Framebuffer>(width, height);
     std::shared_ptr<SOGLR::Shader> framebuffer_shader = std::make_shared<SOGLR::Shader>(
-        "S:\\Users\\Timber\\Documents\\GitHub\\YearOfLearning\\1-WebcamRendering\\src\\framebuffer.vert",
-        "S:\\Users\\Timber\\Documents\\GitHub\\YearOfLearning\\1-WebcamRendering\\src\\framebuffer.frag");
+        "/home/timber/YearOfLearning/1-WebcamRendering/src/framebuffer.vert",
+        "/home/timber/YearOfLearning/1-WebcamRendering/src/framebuffer.frag");
 
+        std::cout << "Camera format: " << camera->GetFormatString() << "\n";
     while (renderer.IsRunning())
     {
         renderer.BeginFrame();
         Vector2Int window_size = renderer.GetWindow()->GetSize();
-
         uint8_t *rgb_data = nullptr;
         uint8_t *nv12_data = camera->CaptureFrame();
-        if (nv12_data != nullptr)
+        if (nv12_data != nullptr && camera->GetWidth() > 0 && camera->GetHeight() > 0  )
         {
 
             rgb_data = new uint8_t[width * height * 3]; // 3 bytes per pixel for RGB
-            SOGLR::ConvertNv12ToRgb(nv12_data, width, height, rgb_data);
+            CPCam::ConvertYuy2ToRgb(nv12_data, width, height, rgb_data);
 
             framebuffer->BindTexture();
 
